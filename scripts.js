@@ -11,12 +11,10 @@ createSearchOptions('authors', authors);
 //theme
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.querySelector('[data-settings-theme]').value = 'night';
-    document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-    document.documentElement.style.setProperty('--color-light', '10, 10, 20');
+    setTheme('night');
 } else {
     document.querySelector('[data-settings-theme]').value = 'day';
-    document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-    document.documentElement.style.setProperty('--color-light', '255, 255, 255');
+    setTheme('day');
 }
 
 // show more button (bottom of screen)
@@ -62,13 +60,7 @@ document.querySelector('[data-settings-form]').addEventListener('submit', (event
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData);
 
-    if (theme === 'night') {
-        document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-        document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-    } else {
-        document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-        document.documentElement.style.setProperty('--color-light', '255, 255, 255');
-    }
+    setTheme(theme);
 
     document.querySelector('[data-settings-overlay]').open = false;
 });
@@ -165,6 +157,8 @@ document.querySelector('[data-list-items]').addEventListener('click', (event) =>
     }
 });
 
+/*---------------------------------------FUNCTIONS---------------------------------------*/
+
 //Abstaction of re-used code
 
 // Renerdering preview buttons
@@ -210,4 +204,15 @@ function createSearchOptions(categoryName, categoryData) {
     }
 
     document.querySelector(`[data-search-${categoryName}]`).appendChild(optionHTML);
+}
+
+// SetTheme
+function setTheme(theme) {
+    if (theme === 'night') {
+        document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
+        document.documentElement.style.setProperty('--color-light', '10, 10, 20');
+    } else {
+        document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
+        document.documentElement.style.setProperty('--color-light', '255, 255, 255');
+    }
 }
