@@ -21,25 +21,26 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`; //FIXME: Overridden by innerHTML?
 showMoreBtn();
 
+//
 // Search modal event listener: cancel button - closes
 document.querySelector('[data-search-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = false;
+    toggleSearchOverlay(false);
 });
 
 // Theme setting overlay listener: cancel
 document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = false;
+    toggleSettingsOverlay(false);
 });
 
 // Search modal event listener: open button
 document.querySelector('[data-header-search]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = true;
+    toggleSearchOverlay(true);
     document.querySelector('[data-search-title]').focus();
 });
 
 // Theme setting overlay listener: open button
 document.querySelector('[data-header-settings]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = true;
+    toggleSettingsOverlay(true);
 });
 
 //Preview close
@@ -55,7 +56,7 @@ document.querySelector('[data-settings-form]').addEventListener('submit', (event
 
     setTheme(theme);
 
-    document.querySelector('[data-settings-overlay]').open = false;
+    toggleSettingsOverlay(false);
 });
 
 // Search modal: submit
@@ -100,7 +101,7 @@ document.querySelector('[data-search-form]').addEventListener('submit', (event) 
     showMoreBtn();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    document.querySelector('[data-search-overlay]').open = false;
+    toggleSearchOverlay(false);
 });
 
 // show more button - bottom
@@ -214,4 +215,22 @@ function showMoreBtn() {
             matches.length - page * BOOKS_PER_PAGE > 0 ? matches.length - page * BOOKS_PER_PAGE : 0
         })</span>
     `;
+}
+
+// toggleSearchOverlay
+/*
+function toggleSearchOverlay(state) {
+    const dataSearchOverlay = document.querySelector('[data-search-overlay]');
+    state === open ? (dataSearchOverlay.open = true) : (dataSearchOverlay.open = false);
+}
+*/
+
+function toggleSearchOverlay(open) {
+    const dataSearchOverlay = document.querySelector('[data-search-overlay]');
+    dataSearchOverlay.open = open ? true : false;
+}
+
+function toggleSettingsOverlay(open) {
+    const dataSettingsOverlay = document.querySelector('[data-settings-overlay]');
+    dataSettingsOverlay.open = open ? true : false;
 }
