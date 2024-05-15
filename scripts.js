@@ -18,15 +18,8 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 }
 
 // show more button (bottom of screen)
-document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
-document.querySelector('[data-list-button]').disabled = matches.length - page * BOOKS_PER_PAGE < 0;
-
-document.querySelector('[data-list-button]').innerHTML = `
-    <span>Show more</span>
-    <span class="list__remaining"> (${
-        matches.length - page * BOOKS_PER_PAGE > 0 ? matches.length - page * BOOKS_PER_PAGE : 0
-    })</span>
-`;
+document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`; //FIXME: Overridden by innerHTML?
+showMoreBtn();
 
 // Search modal event listener: cancel button - closes
 document.querySelector('[data-search-cancel]').addEventListener('click', () => {
@@ -104,14 +97,7 @@ document.querySelector('[data-search-form]').addEventListener('submit', (event) 
 
     createPreviewButtons(matches, 0);
 
-    document.querySelector('[data-list-button]').disabled = matches.length - page * BOOKS_PER_PAGE < 1;
-
-    document.querySelector('[data-list-button]').innerHTML = `
-        <span>Show more</span>
-        <span class="list__remaining"> (${
-            matches.length - page * BOOKS_PER_PAGE > 0 ? matches.length - page * BOOKS_PER_PAGE : 0
-        })</span>
-    `;
+    showMoreBtn();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.querySelector('[data-search-overlay]').open = false;
@@ -215,4 +201,16 @@ function setTheme(theme) {
         document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
         document.documentElement.style.setProperty('--color-light', '255, 255, 255');
     }
+}
+
+// showMoreBtn
+function showMoreBtn() {
+    document.querySelector('[data-list-button]').disabled = matches.length - page * BOOKS_PER_PAGE < 1;
+
+    document.querySelector('[data-list-button]').innerHTML = `
+        <span>Show more</span>
+        <span class="list__remaining"> (${
+            matches.length - page * BOOKS_PER_PAGE > 0 ? matches.length - page * BOOKS_PER_PAGE : 0
+        })</span>
+    `;
 }
