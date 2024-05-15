@@ -8,17 +8,8 @@ createPreviewButtons(matches, 0);
 createSearchOptions('genres', genres);
 createSearchOptions('authors', authors);
 
-//theme
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.querySelector('[data-settings-theme]').value = 'night';
-    setTheme('night');
-} else {
-    document.querySelector('[data-settings-theme]').value = 'day';
-    setTheme('day');
-}
+initialiseTheme();
 
-// show more button (bottom of screen)
-document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`; //FIXME: Overridden by innerHTML?
 showMoreBtn();
 
 setupEventListeners();
@@ -202,6 +193,17 @@ function createSearchOptions(categoryName, categoryData) {
     }
 
     document.querySelector(`[data-search-${categoryName}]`).appendChild(optionHTML);
+}
+
+// Initialise theme function
+function initialiseTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector('[data-settings-theme]').value = 'night';
+        setTheme('night');
+    } else {
+        document.querySelector('[data-settings-theme]').value = 'day';
+        setTheme('day');
+    }
 }
 
 // SetTheme
