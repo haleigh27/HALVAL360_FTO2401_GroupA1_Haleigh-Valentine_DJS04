@@ -21,129 +21,139 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`; //FIXME: Overridden by innerHTML?
 showMoreBtn();
 
-//
-// Search modal event listener: cancel button - closes
-document.querySelector('[data-search-cancel]').addEventListener('click', () => {
-    toggleSearchOverlay(false);
-});
+setupEventListeners();
 
-// Theme setting overlay listener: cancel
-document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    toggleSettingsOverlay(false);
-});
+/*---------------------------------------Event Listenners---------------------------------------*/
+function setupEventListeners() {
+    /*---- Search Modal Event Listeners ----*/
 
-// Search modal event listener: open button
-document.querySelector('[data-header-search]').addEventListener('click', () => {
-    toggleSearchOverlay(true);
-    document.querySelector('[data-search-title]').focus();
-});
+    // Cancel search modal event listener
+    document.querySelector('[data-search-cancel]').addEventListener('click', () => {
+        toggleSearchOverlay(false);
+    });
 
-// Theme setting overlay listener: open button
-document.querySelector('[data-header-settings]').addEventListener('click', () => {
-    toggleSettingsOverlay(true);
-});
+    // Open search modal event listener
+    document.querySelector('[data-header-search]').addEventListener('click', () => {
+        toggleSearchOverlay(true);
+        document.querySelector('[data-search-title]').focus();
+    });
 
-//Preview close
-document.querySelector('[data-list-close]').addEventListener('click', () => {
-    document.querySelector('[data-list-active]').open = false;
-});
+    // Submit search modal settings
+    document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const filters = Object.fromEntries(formData);
+        const result = [];
 
-// Theme setting overlay listener: submit button form submission
-document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const { theme } = Object.fromEntries(formData);
+        for (const book of books) {
+            let genreMatch = filters.genre === 'any';
 
-    setTheme(theme);
+            for (const singleGenre of book.genres) {
+                if (genreMatch) break;
+                if (singleGenre === filters.genre) {
+                    genreMatch = true;
+                }
+            }
 
-    toggleSettingsOverlay(false);
-});
-
-// Search modal: submit
-document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const filters = Object.fromEntries(formData);
-    const result = [];
-
-    for (const book of books) {
-        let genreMatch = filters.genre === 'any';
-
-        for (const singleGenre of book.genres) {
-            if (genreMatch) break;
-            if (singleGenre === filters.genre) {
-                genreMatch = true;
+            if (
+                (filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
+                (filters.author === 'any' || book.author === filters.author) &&
+                genreMatch
+            ) {
+                result.push(book);
             }
         }
 
-        if (
-            (filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
-            (filters.author === 'any' || book.author === filters.author) &&
-            genreMatch
-        ) {
-            result.push(book);
+        page = 1;
+        matches = result;
+
+        if (result.length < 1) {
+            document.querySelector('[data-list-message]').classList.add('list__message_show');
+        } else {
+            document.querySelector('[data-list-message]').classList.remove('list__message_show');
         }
-    }
 
-    page = 1;
-    matches = result;
+        document.querySelector('[data-list-items]').innerHTML = '';
 
-    if (result.length < 1) {
-        document.querySelector('[data-list-message]').classList.add('list__message_show');
-    } else {
-        document.querySelector('[data-list-message]').classList.remove('list__message_show');
-    }
+        createPreviewButtons(matches, 0);
 
-    document.querySelector('[data-list-items]').innerHTML = '';
+        showMoreBtn();
 
-    createPreviewButtons(matches, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        toggleSearchOverlay(false);
+    });
 
-    showMoreBtn();
+    /*---- Settings/Theme Modal Event Listeners ----*/
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    toggleSearchOverlay(false);
-});
+    // Cancel theme setting overlay event listener
+    document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
+        toggleSettingsOverlay(false);
+    });
 
-// show more button - bottom
+    // Open theme setting overlay event listener
+    document.querySelector('[data-header-settings]').addEventListener('click', () => {
+        toggleSettingsOverlay(true);
+    });
 
-document.querySelector('[data-list-button]').addEventListener('click', () => {
-    createPreviewButtons(matches, page);
-    page += 1;
-    showMoreBtn();
-});
+    // Submit theme setting event listener
+    document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const { theme } = Object.fromEntries(formData);
 
-//
+        setTheme(theme);
 
-document.querySelector('[data-list-items]').addEventListener('click', (event) => {
-    const pathArray = Array.from(event.path || event.composedPath());
-    let active = null;
+        toggleSettingsOverlay(false);
+    });
 
-    for (const node of pathArray) {
-        if (active) break;
+    /*---- Show More Button Event Listeners ----*/
 
-        if (node?.dataset?.preview) {
-            let result = null;
+    // show more button event listener
+    document.querySelector('[data-list-button]').addEventListener('click', () => {
+        createPreviewButtons(matches, page);
+        page += 1;
+        showMoreBtn();
+    });
 
-            for (const singleBook of books) {
-                if (result) break;
-                if (singleBook.id === node?.dataset?.preview) result = singleBook;
+    /*---- View Book Details Event Listener ----*/
+
+    //Close book details event listener
+    document.querySelector('[data-list-close]').addEventListener('click', () => {
+        document.querySelector('[data-list-active]').open = false;
+    });
+
+    // Display active book details event listener
+    document.querySelector('[data-list-items]').addEventListener('click', (event) => {
+        const pathArray = Array.from(event.path || event.composedPath());
+        let active = null;
+
+        for (const node of pathArray) {
+            if (active) break;
+
+            if (node?.dataset?.preview) {
+                let result = null;
+
+                for (const singleBook of books) {
+                    if (result) break;
+                    if (singleBook.id === node?.dataset?.preview) result = singleBook;
+                }
+
+                active = result;
             }
-
-            active = result;
         }
-    }
 
-    if (active) {
-        document.querySelector('[data-list-active]').open = true;
-        document.querySelector('[data-list-blur]').src = active.image;
-        document.querySelector('[data-list-image]').src = active.image;
-        document.querySelector('[data-list-title]').innerText = active.title;
-        document.querySelector('[data-list-subtitle]').innerText = `${authors[active.author]} (${new Date(
-            active.published
-        ).getFullYear()})`;
-        document.querySelector('[data-list-description]').innerText = active.description;
-    }
-});
+        if (active) {
+            document.querySelector('[data-list-active]').open = true;
+            document.querySelector('[data-list-blur]').src = active.image;
+            document.querySelector('[data-list-image]').src = active.image;
+            document.querySelector('[data-list-title]').innerText = active.title;
+            document.querySelector('[data-list-subtitle]').innerText = `${authors[active.author]} (${new Date(
+                active.published
+            ).getFullYear()})`;
+            document.querySelector('[data-list-description]').innerText = active.description;
+        }
+    });
+}
 
 /*---------------------------------------FUNCTIONS---------------------------------------*/
 
