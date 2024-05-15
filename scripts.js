@@ -108,6 +108,7 @@ document.querySelector('[data-search-form]').addEventListener('submit', (event) 
 document.querySelector('[data-list-button]').addEventListener('click', () => {
     createPreviewButtons(matches, page);
     page += 1;
+    showMoreBtn();
 });
 
 //
