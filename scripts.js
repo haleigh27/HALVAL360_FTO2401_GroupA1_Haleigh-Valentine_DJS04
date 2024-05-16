@@ -3,6 +3,30 @@ import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 let page = 1;
 let matches = books;
 
+/*---------------------------------------DOM Elements---------------------------------------*/
+const elements = {
+    dataSearchCancel: document.querySelector('[data-search-cancel]'),
+    dataHeaderSearch: document.querySelector('[data-header-search]'),
+    dataSearchTitle: document.querySelector('[data-search-title]'),
+    dataSearchForm: document.querySelector('[data-search-form]'),
+    dataListMessage: document.querySelector('[data-list-message]'),
+    dataListItems: document.querySelector('[data-list-items]'),
+    dataSettingsCancel: document.querySelector('[data-settings-cancel]'),
+    dataHeaderSettings: document.querySelector('[data-header-settings]'),
+    dataSettingsForm: document.querySelector('[data-settings-form]'),
+    dataListButton: document.querySelector('[data-list-button]'),
+    dataListClose: document.querySelector('[data-list-close]'),
+    dataListActive: document.querySelector('[data-list-active]'),
+    dataListBlur: document.querySelector('[data-list-blur]'),
+    dataListImage: document.querySelector('[data-list-image]'),
+    dataListTitle: document.querySelector('[data-list-title]'),
+    dataListSubtitle: document.querySelector('[data-list-subtitle]'),
+    dataListDescription: document.querySelector('[data-list-description]'),
+    dataSettingsTheme: document.querySelector('[data-settings-theme]'),
+    dataSearchOverlay: document.querySelector('[data-search-overlay]'),
+    dataSettingsOverlay: document.querySelector('[data-settings-overlay]'),
+};
+
 createPreviewButtons(matches, 0);
 
 createSearchOptions('genres', genres);
@@ -19,18 +43,18 @@ function setupEventListeners() {
     /*---- Search Modal Event Listeners ----*/
 
     // Cancel search modal event listener
-    document.querySelector('[data-search-cancel]').addEventListener('click', () => {
+    elements.dataSearchCancel.addEventListener('click', () => {
         toggleSearchOverlay(false);
     });
 
     // Open search modal event listener
-    document.querySelector('[data-header-search]').addEventListener('click', () => {
+    elements.dataHeaderSearch.addEventListener('click', () => {
         toggleSearchOverlay(true);
-        document.querySelector('[data-search-title]').focus();
+        elements.dataSearchTitle.focus();
     });
 
     // Submit search modal settings
-    document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
+    elements.dataSearchForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const filters = Object.fromEntries(formData);
@@ -59,12 +83,12 @@ function setupEventListeners() {
         matches = result;
 
         if (result.length < 1) {
-            document.querySelector('[data-list-message]').classList.add('list__message_show');
+            elements.dataListMessage.classList.add('list__message_show');
         } else {
-            document.querySelector('[data-list-message]').classList.remove('list__message_show');
+            elements.dataListMessage.classList.remove('list__message_show');
         }
 
-        document.querySelector('[data-list-items]').innerHTML = '';
+        elements.dataListItems.innerHTML = '';
 
         createPreviewButtons(matches, 0);
 
@@ -77,17 +101,17 @@ function setupEventListeners() {
     /*---- Settings/Theme Modal Event Listeners ----*/
 
     // Cancel theme setting overlay event listener
-    document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
+    elements.dataSettingsCancel.addEventListener('click', () => {
         toggleSettingsOverlay(false);
     });
 
     // Open theme setting overlay event listener
-    document.querySelector('[data-header-settings]').addEventListener('click', () => {
+    elements.dataHeaderSettings.addEventListener('click', () => {
         toggleSettingsOverlay(true);
     });
 
     // Submit theme setting event listener
-    document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
+    elements.dataSettingsForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const { theme } = Object.fromEntries(formData);
@@ -100,7 +124,7 @@ function setupEventListeners() {
     /*---- Show More Button Event Listeners ----*/
 
     // show more button event listener
-    document.querySelector('[data-list-button]').addEventListener('click', () => {
+    elements.dataListButton.addEventListener('click', () => {
         createPreviewButtons(matches, page);
         page += 1;
         showMoreBtn();
@@ -109,12 +133,12 @@ function setupEventListeners() {
     /*---- View Book Details Event Listener ----*/
 
     //Close book details event listener
-    document.querySelector('[data-list-close]').addEventListener('click', () => {
-        document.querySelector('[data-list-active]').open = false;
+    elements.dataListClose.addEventListener('click', () => {
+        elements.dataListActive.open = false;
     });
 
     // Display active book details event listener
-    document.querySelector('[data-list-items]').addEventListener('click', (event) => {
+    elements.dataListItems.addEventListener('click', (event) => {
         const pathArray = Array.from(event.path || event.composedPath());
         let active = null;
 
@@ -134,14 +158,14 @@ function setupEventListeners() {
         }
 
         if (active) {
-            document.querySelector('[data-list-active]').open = true;
-            document.querySelector('[data-list-blur]').src = active.image;
-            document.querySelector('[data-list-image]').src = active.image;
-            document.querySelector('[data-list-title]').innerText = active.title;
-            document.querySelector('[data-list-subtitle]').innerText = `${authors[active.author]} (${new Date(
+            elements.dataListActive.open = true;
+            elements.dataListBlur.src = active.image;
+            elements.dataListImage.src = active.image;
+            elements.dataListTitle.innerText = active.title;
+            elements.dataListSubtitle.innerText = `${authors[active.author]} (${new Date(
                 active.published
             ).getFullYear()})`;
-            document.querySelector('[data-list-description]').innerText = active.description;
+            elements.dataListDescription.innerText = active.description;
         }
     });
 }
@@ -174,7 +198,7 @@ function createPreviewButtons(matches, page) {
         fragment.appendChild(buttonElement);
     }
 
-    document.querySelector('[data-list-items]').appendChild(fragment);
+    elements.dataListItems.appendChild(fragment);
 }
 
 //genres authors search options
@@ -198,10 +222,10 @@ function createSearchOptions(categoryName, categoryData) {
 // Initialise theme function
 function initialiseTheme() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.querySelector('[data-settings-theme]').value = 'night';
+        elements.dataSettingsTheme.value = 'night';
         setTheme('night');
     } else {
-        document.querySelector('[data-settings-theme]').value = 'day';
+        elements.dataSettingsTheme.value = 'day';
         setTheme('day');
     }
 }
@@ -219,9 +243,9 @@ function setTheme(theme) {
 
 // showMoreBtn
 function showMoreBtn() {
-    document.querySelector('[data-list-button]').disabled = matches.length - page * BOOKS_PER_PAGE < 1;
+    elements.dataListButton.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
-    document.querySelector('[data-list-button]').innerHTML = `
+    elements.dataListButton.innerHTML = `
         <span>Show more</span>
         <span class="list__remaining"> (${
             matches.length - page * BOOKS_PER_PAGE > 0 ? matches.length - page * BOOKS_PER_PAGE : 0
@@ -232,17 +256,14 @@ function showMoreBtn() {
 // toggleSearchOverlay
 /*
 function toggleSearchOverlay(state) {
-    const dataSearchOverlay = document.querySelector('[data-search-overlay]');
     state === open ? (dataSearchOverlay.open = true) : (dataSearchOverlay.open = false);
 }
 */
 
 function toggleSearchOverlay(open) {
-    const dataSearchOverlay = document.querySelector('[data-search-overlay]');
-    dataSearchOverlay.open = open ? true : false;
+    elements.dataSearchOverlay.open = open ? true : false;
 }
 
 function toggleSettingsOverlay(open) {
-    const dataSettingsOverlay = document.querySelector('[data-settings-overlay]');
-    dataSettingsOverlay.open = open ? true : false;
+    elements.dataSettingsOverlay.open = open ? true : false;
 }
