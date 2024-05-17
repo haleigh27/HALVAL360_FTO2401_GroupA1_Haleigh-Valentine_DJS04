@@ -1,5 +1,13 @@
 import { authors, BOOKS_PER_PAGE } from '../utils/data.js';
 
+/**
+ * Generates a list of book preview buttons
+ *
+ * @export
+ * @class BookPreviews
+ * @typedef {BookPreviews}
+ * @extends {HTMLElement}
+ */
 export class BookPreviews extends HTMLElement {
     constructor() {
         super();
@@ -12,6 +20,11 @@ export class BookPreviews extends HTMLElement {
         this.renderBookPreviews();
     }
 
+    /**
+     * Renders individual book preview button
+     *
+     * @param {object} book
+     */
     renderPreview(book) {
         const { author, id, image, title } = book;
         const buttonElement = document.createElement('button');
@@ -90,6 +103,9 @@ export class BookPreviews extends HTMLElement {
         this.shadowRoot.appendChild(buttonElement);
     }
 
+    /**
+     * Renders list of book previews
+     */
     renderBookPreviews() {
         const booksToRender = this.matches.slice(0 * BOOKS_PER_PAGE, (this.page + 1) * BOOKS_PER_PAGE);
         booksToRender.forEach((book) => {
@@ -97,6 +113,10 @@ export class BookPreviews extends HTMLElement {
         });
     }
 
+    /**
+     * @param {array} matches
+     * @param {number} page
+     */
     setMatchesAndPage(matches, page) {
         this.matches = matches;
         this.page = page;
