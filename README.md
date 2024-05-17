@@ -1,4 +1,4 @@
-# DJS03 Project: Book Connect - Abstractions
+# Project: Book Connect - Abstractions (DJS03) and Web Components (DJS04)
 
 The "Book Connect" application renders a list of previews of books in a database. Each preview is a button styled to display the book cover image, title and author.
 
@@ -10,7 +10,7 @@ User interactions available include:
 
 ![alt text](image.png)
 
-## Discussion and Reflection Report
+## Discussion and Reflection Report (DJS03 Project: Book Connect - Abstractions)
 
 ### Changes and rational
 
@@ -55,3 +55,13 @@ User interactions available include:
 ### Reflections
 
 -   This project was challenging as there was no strict guideline of what to do or what to refactor. It was a good learning experience.
+
+## Discussion and Reflection Report (DJS04 Project: Book Connect - Web Components)
+
+### Changes and rational
+
+-   Transform the book preview functionality of the "Book Connect" application into a fully operational Web Component to meet objective.
+
+### Reflections
+
+-   I found converting the functionality to a fully functional web component quite challenging as I initially struggled to make the styling work correctly.
