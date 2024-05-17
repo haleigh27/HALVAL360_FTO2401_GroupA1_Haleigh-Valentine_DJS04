@@ -32,64 +32,6 @@ export const elements = {
 
 /*-----------------------------------------FUNCTIONS----------------------------------------*/
 
-//Abstaction of re-used code
-
-// /**
-//  * Function renders a list of preview buttons for books
-//  *
-//  * @param {array} matches
-//  * @param {number} page - current page (start at 0)
-//  */
-// export function renderPreviewButtons(matches, page) {
-//     const fragment = document.createDocumentFragment();
-
-//     for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
-//         const buttonElement = document.createElement('button');
-//         buttonElement.classList = 'preview';
-//         buttonElement.setAttribute('data-preview', id);
-
-//         buttonElement.innerHTML = `
-//             <img
-//                 class="preview__image"
-//                 src="${image}"
-//             />
-
-//             <div class="preview__info">
-//                 <h3 class="preview__title">${title}</h3>
-//                 <div class="preview__author">${authors[author]}</div>
-//             </div>
-//         `;
-
-//         fragment.appendChild(buttonElement);
-//     }
-
-//     elements.dataListItems.appendChild(fragment);
-// }
-
-// /**
-//  * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.
-//  *
-//  * @param {string} categoryName
-//  * @param {object} categoryData
-//  */
-// export function renderSearchOptions(categoryName, categoryData) {
-//     const category = categoryName.toLowerCase();
-//     const optionHTML = document.createDocumentFragment();
-//     const firstOptionElement = document.createElement('option');
-//     firstOptionElement.value = 'any';
-//     firstOptionElement.innerText = `All ${category}`;
-//     optionHTML.appendChild(firstOptionElement);
-
-//     for (const [id, name] of Object.entries(categoryData)) {
-//         const element = document.createElement('option');
-//         element.value = id;
-//         element.innerText = name;
-//         optionHTML.appendChild(element);
-//     }
-
-//     document.querySelector(`[data-search-${category}]`).appendChild(optionHTML);
-// }
-
 /**
  * Initialises light or dark theme
  */
@@ -148,3 +90,60 @@ export function toggleSettingsOverlay(open) {
 }
 
 /*------------------------------------------------------------------------------------------*/
+//Abstaction of re-used code
+
+// /**
+//  * Function renders a list of preview buttons for books
+//  *
+//  * @param {array} matches
+//  * @param {number} page - current page (start at 0)
+//  */
+// export function renderPreviewButtons(matches, page) {
+//     const fragment = document.createDocumentFragment();
+
+//     for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
+//         const buttonElement = document.createElement('button');
+//         buttonElement.classList = 'preview';
+//         buttonElement.setAttribute('data-preview', id);
+
+//         buttonElement.innerHTML = `
+//             <img
+//                 class="preview__image"
+//                 src="${image}"
+//             />
+
+//             <div class="preview__info">
+//                 <h3 class="preview__title">${title}</h3>
+//                 <div class="preview__author">${authors[author]}</div>
+//             </div>
+//         `;
+
+//         fragment.appendChild(buttonElement);
+//     }
+
+//     elements.dataListItems.appendChild(fragment);
+// }
+
+// /**
+//  * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.
+//  *
+//  * @param {string} categoryName
+//  * @param {object} categoryData
+//  */
+// export function renderSearchOptions(categoryName, categoryData) {
+//     const category = categoryName.toLowerCase();
+//     const optionHTML = document.createDocumentFragment();
+//     const firstOptionElement = document.createElement('option');
+//     firstOptionElement.value = 'any';
+//     firstOptionElement.innerText = `All ${category}`;
+//     optionHTML.appendChild(firstOptionElement);
+
+//     for (const [id, name] of Object.entries(categoryData)) {
+//         const element = document.createElement('option');
+//         element.value = id;
+//         element.innerText = name;
+//         optionHTML.appendChild(element);
+//     }
+
+//     document.querySelector(`[data-search-${category}]`).appendChild(optionHTML);
+// }
