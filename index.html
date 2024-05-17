@@ -27,6 +27,7 @@
         <script type="module" src="./utils/data.js"></script>
         <script type="module" src="./utils/helpers.js"></script>
         <script type="module" src="./components/book-previews.js"></script>
+        <script type="module" src="./components/search-field.js"></script>
     </head>
     <body>
         <header class="header">
@@ -103,6 +104,7 @@
                         <input class="overlay__input" data-search-title name="title" placeholder="Any" />
                     </label>
 
+                    <!--
                     <label class="overlay__field">
                         <div class="overlay__label">Genre</div>
                         <select class="overlay__input overlay__input_select" data-search-genres name="genre"></select>
@@ -112,6 +114,9 @@
                         <div class="overlay__label">Author</div>
                         <select class="overlay__input overlay__input_select" data-search-authors name="author"></select>
                     </label>
+-->
+                    <search-field label="genre"></search-field>
+                    <search-field label="author"></search-field>
                 </form>
 
                 <div class="overlay__row">

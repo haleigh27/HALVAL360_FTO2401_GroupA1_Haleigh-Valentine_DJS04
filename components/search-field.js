@@ -1,4 +1,4 @@
-import { authors, genres } from '../data.js';
+import { authors, genres } from '../utils/data.js';
 
 const template = document.createElement('template');
 template.innerHTML = `

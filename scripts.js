@@ -1,10 +1,11 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from './utils/data.js';
+import { books, authors } from './utils/data.js';
 import './components/book-previews.js';
+import { SearchField } from './components/search-field.js';
 
 import {
     elements,
     //renderPreviewButtons,
-    renderSearchOptions,
+    //renderSearchOptions,
     initialiseTheme,
     setTheme,
     showMoreBtn,
@@ -19,8 +20,8 @@ let matches = books;
 
 elements.bookPreviews.setMatchesAndPage(matches, 0);
 
-renderSearchOptions('genres', genres);
-renderSearchOptions('authors', authors);
+// renderSearchOptions('genres', genres);
+// renderSearchOptions('authors', authors);
 
 initialiseTheme();
 
@@ -48,7 +49,10 @@ function setupEventListeners() {
     elements.dataSearchForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const filters = Object.fromEntries(formData);
+        const filters = Object.fromEntries(formData.entries());
+        // Merge with selected values from SearchField
+        Object.assign(filters, SearchField.selectedValues);
+        console.log(filters);
         const result = [];
 
         for (const book of books) {
