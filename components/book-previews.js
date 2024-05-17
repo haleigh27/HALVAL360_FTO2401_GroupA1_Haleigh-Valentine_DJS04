@@ -91,7 +91,7 @@ export class BookPreviews extends HTMLElement {
     }
 
     renderBookPreviews() {
-        const booksToRender = this.matches.slice(this.page * BOOKS_PER_PAGE, (this.page + 1) * BOOKS_PER_PAGE);
+        const booksToRender = this.matches.slice(0 * BOOKS_PER_PAGE, (this.page + 1) * BOOKS_PER_PAGE);
         booksToRender.forEach((book) => {
             this.renderPreview(book);
         });
