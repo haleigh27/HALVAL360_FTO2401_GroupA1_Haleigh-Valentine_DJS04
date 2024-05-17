@@ -1,4 +1,5 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
+import '../components/book-previews.js';
 
 /*---------------------------------------DOM Elements---------------------------------------*/
 export const elements = {
@@ -22,6 +23,9 @@ export const elements = {
     dataSettingsTheme: document.querySelector('[data-settings-theme]'),
     dataSearchOverlay: document.querySelector('[data-search-overlay]'),
     dataSettingsOverlay: document.querySelector('[data-settings-overlay]'),
+
+    // Custom Components
+    bookPreviews: document.querySelector('book-previews'),
 };
 
 /*------------------------------------------------------------------------------------------*/
@@ -30,37 +34,37 @@ export const elements = {
 
 //Abstaction of re-used code
 
-/**
- * Function renders a list of preview buttons for books
- *
- * @param {array} matches
- * @param {number} page - current page (start at 0)
- */
-export function renderPreviewButtons(matches, page) {
-    const fragment = document.createDocumentFragment();
+// /**
+//  * Function renders a list of preview buttons for books
+//  *
+//  * @param {array} matches
+//  * @param {number} page - current page (start at 0)
+//  */
+// export function renderPreviewButtons(matches, page) {
+//     const fragment = document.createDocumentFragment();
 
-    for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
-        const buttonElement = document.createElement('button');
-        buttonElement.classList = 'preview';
-        buttonElement.setAttribute('data-preview', id);
+//     for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
+//         const buttonElement = document.createElement('button');
+//         buttonElement.classList = 'preview';
+//         buttonElement.setAttribute('data-preview', id);
 
-        buttonElement.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
+//         buttonElement.innerHTML = `
+//             <img
+//                 class="preview__image"
+//                 src="${image}"
+//             />
 
-        fragment.appendChild(buttonElement);
-    }
+//             <div class="preview__info">
+//                 <h3 class="preview__title">${title}</h3>
+//                 <div class="preview__author">${authors[author]}</div>
+//             </div>
+//         `;
 
-    elements.dataListItems.appendChild(fragment);
-}
+//         fragment.appendChild(buttonElement);
+//     }
+
+//     elements.dataListItems.appendChild(fragment);
+// }
 
 /**
  * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.

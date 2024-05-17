@@ -200,6 +200,7 @@ option {
 
 /* preview */
 
+/*
 .preview {
     border-width: 0;
     width: 100%;
@@ -255,6 +256,7 @@ option {
 .preview__author {
     color: rgba(var(--color-dark), 0.4);
 }
+*/
 
 /* overlay */
 

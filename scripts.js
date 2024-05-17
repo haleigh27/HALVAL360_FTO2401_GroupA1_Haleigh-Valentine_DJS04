@@ -1,8 +1,9 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './utils/data.js';
+import './components/book-previews.js';
 
 import {
     elements,
-    renderPreviewButtons,
+    //renderPreviewButtons,
     renderSearchOptions,
     initialiseTheme,
     setTheme,
@@ -16,7 +17,7 @@ import {
 let page = 1;
 let matches = books;
 
-renderPreviewButtons(matches, 0);
+elements.bookPreviews.setMatchesAndPage(matches, 0);
 
 renderSearchOptions('genres', genres);
 renderSearchOptions('authors', authors);
@@ -78,9 +79,9 @@ function setupEventListeners() {
             elements.dataListMessage.classList.remove('list__message_show');
         }
 
-        elements.dataListItems.innerHTML = '';
+        //elements.dataListItems.innerHTML = '';
 
-        renderPreviewButtons(matches, 0);
+        elements.bookPreviews.setMatchesAndPage(matches, 0);
 
         showMoreBtn(matches, page);
 
@@ -115,7 +116,7 @@ function setupEventListeners() {
 
     // show more button event listener
     elements.dataListButton.addEventListener('click', () => {
-        renderPreviewButtons(matches, page);
+        elements.bookPreviews.setMatchesAndPage(matches, page);
         page += 1;
         showMoreBtn(matches, page);
     });
