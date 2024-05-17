@@ -27,10 +27,11 @@ const elements = {
     dataSettingsOverlay: document.querySelector('[data-settings-overlay]'),
 };
 
-createPreviewButtons(matches, 0);
+/*------------------------------------------------------------------------------------------*/
+renderPreviewButtons(matches, 0);
 
-createSearchOptions('genres', genres);
-createSearchOptions('authors', authors);
+renderSearchOptions('genres', genres);
+renderSearchOptions('authors', authors);
 
 initialiseTheme();
 
@@ -38,7 +39,7 @@ showMoreBtn();
 
 setupEventListeners();
 
-/*---------------------------------------Event Listenners---------------------------------------*/
+/*-------------------------------------Event Listenners-------------------------------------*/
 function setupEventListeners() {
     /*---- Search Modal Event Listeners ----*/
 
@@ -90,7 +91,7 @@ function setupEventListeners() {
 
         elements.dataListItems.innerHTML = '';
 
-        createPreviewButtons(matches, 0);
+        renderPreviewButtons(matches, 0);
 
         showMoreBtn();
 
@@ -125,7 +126,7 @@ function setupEventListeners() {
 
     // show more button event listener
     elements.dataListButton.addEventListener('click', () => {
-        createPreviewButtons(matches, page);
+        renderPreviewButtons(matches, page);
         page += 1;
         showMoreBtn();
     });
@@ -170,12 +171,12 @@ function setupEventListeners() {
     });
 }
 
-/*---------------------------------------FUNCTIONS---------------------------------------*/
+/*-----------------------------------------FUNCTIONS----------------------------------------*/
 
 //Abstaction of re-used code
 
-// Renerdering preview buttons
-function createPreviewButtons(matches, page) {
+// Renerdering preview buttons list
+function renderPreviewButtons(matches, page) {
     const fragment = document.createDocumentFragment();
 
     for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
@@ -202,7 +203,7 @@ function createPreviewButtons(matches, page) {
 }
 
 //genres authors search options
-function createSearchOptions(categoryName, categoryData) {
+function renderSearchOptions(categoryName, categoryData) {
     const optionHTML = document.createDocumentFragment();
     const firstOptionElement = document.createElement('option');
     firstOptionElement.value = 'any';
