@@ -1,4 +1,4 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
+import { BOOKS_PER_PAGE } from './data.js';
 import '../components/book-previews.js';
 
 /*---------------------------------------DOM Elements---------------------------------------*/
@@ -66,29 +66,29 @@ export const elements = {
 //     elements.dataListItems.appendChild(fragment);
 // }
 
-/**
- * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.
- *
- * @param {string} categoryName
- * @param {object} categoryData
- */
-export function renderSearchOptions(categoryName, categoryData) {
-    const category = categoryName.toLowerCase();
-    const optionHTML = document.createDocumentFragment();
-    const firstOptionElement = document.createElement('option');
-    firstOptionElement.value = 'any';
-    firstOptionElement.innerText = `All ${category}`;
-    optionHTML.appendChild(firstOptionElement);
+// /**
+//  * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.
+//  *
+//  * @param {string} categoryName
+//  * @param {object} categoryData
+//  */
+// export function renderSearchOptions(categoryName, categoryData) {
+//     const category = categoryName.toLowerCase();
+//     const optionHTML = document.createDocumentFragment();
+//     const firstOptionElement = document.createElement('option');
+//     firstOptionElement.value = 'any';
+//     firstOptionElement.innerText = `All ${category}`;
+//     optionHTML.appendChild(firstOptionElement);
 
-    for (const [id, name] of Object.entries(categoryData)) {
-        const element = document.createElement('option');
-        element.value = id;
-        element.innerText = name;
-        optionHTML.appendChild(element);
-    }
+//     for (const [id, name] of Object.entries(categoryData)) {
+//         const element = document.createElement('option');
+//         element.value = id;
+//         element.innerText = name;
+//         optionHTML.appendChild(element);
+//     }
 
-    document.querySelector(`[data-search-${category}]`).appendChild(optionHTML);
-}
+//     document.querySelector(`[data-search-${category}]`).appendChild(optionHTML);
+// }
 
 /**
  * Initialises light or dark theme
