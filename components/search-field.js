@@ -9,7 +9,6 @@ template.innerHTML = `
             background-color: rgba(var(--color-dark), 0.05);
             border-width: 0;
             border-radius: 6px;
-            width: 100%;
             height: 4rem;
             color: rgba(var(--color-dark), 1);
             padding: 1rem 0.5rem 0 0.75rem;
@@ -42,7 +41,7 @@ template.innerHTML = `
     <label class="overlay__field">
         <div class="overlay__label"></div>
         <select class="overlay__input overlay__input_select">
-            <option value="any"></option>
+            <option value="any">All</option>
         </select>
     </label>
 `;
@@ -53,6 +52,12 @@ export class SearchField extends HTMLElement {
      */
     #label = this.getAttribute('label');
 
+    // Object to store selected values
+    static selectedValues = {
+        author: 'any',
+        genre: 'any',
+    };
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -60,7 +65,6 @@ export class SearchField extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log(this.#label);
         const capLabel = this.#label.charAt(0).toUpperCase() + this.#label.slice(1);
         this.shadowRoot.querySelector('.overlay__label').innerText = capLabel;
 
@@ -76,6 +80,9 @@ export class SearchField extends HTMLElement {
         } else if (this.#label === 'author') {
             this.renderSearchOptions(authors);
         }
+
+        // Add event listener for change event
+        select.addEventListener('change', this.handleSelectChange.bind(this));
     }
 
     renderSearchOptions(category) {
@@ -86,5 +93,12 @@ export class SearchField extends HTMLElement {
             this.shadowRoot.querySelector('select').appendChild(element);
         }
     }
+
+    handleSelectChange(event) {
+        const selectedValue = event.target.value;
+        SearchField.selectedValues[this.#label] = selectedValue;
+        console.log(SearchField.selectedValues);
+    }
 }
+
 customElements.define('search-field', SearchField);
