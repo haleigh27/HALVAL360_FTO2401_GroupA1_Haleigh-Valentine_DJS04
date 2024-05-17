@@ -1,4 +1,5 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
+import { books, authors, genres, BOOKS_PER_PAGE } from './utils/data.js';
+
 import {
     elements,
     renderPreviewButtons,
@@ -9,6 +10,8 @@ import {
     toggleSearchOverlay,
     toggleSettingsOverlay,
 } from './utils/helpers.js';
+
+/*------------------------------------------------------------------------------------------*/
 
 let page = 1;
 let matches = books;
@@ -25,6 +28,7 @@ showMoreBtn(matches, page);
 setupEventListeners();
 
 /*-------------------------------------Event Listenners-------------------------------------*/
+
 function setupEventListeners() {
     /*---- Search Modal Event Listeners ----*/
 
