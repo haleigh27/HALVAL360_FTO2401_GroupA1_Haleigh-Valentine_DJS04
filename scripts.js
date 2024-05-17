@@ -175,7 +175,12 @@ function setupEventListeners() {
 
 //Abstaction of re-used code
 
-// Renerdering preview buttons list
+/**
+ * Function renders a list of preview buttons for books
+ *
+ * @param {array} matches
+ * @param {number} page - current page (start at 0)
+ */
 function renderPreviewButtons(matches, page) {
     const fragment = document.createDocumentFragment();
 
@@ -202,12 +207,18 @@ function renderPreviewButtons(matches, page) {
     elements.dataListItems.appendChild(fragment);
 }
 
-//genres authors search options
+/**
+ * Function renders a fragment of option elements and appends it to a select tag with a 'data-search-${category}' tag.
+ *
+ * @param {string} categoryName
+ * @param {object} categoryData
+ */
 function renderSearchOptions(categoryName, categoryData) {
+    const category = categoryName.toLowerCase();
     const optionHTML = document.createDocumentFragment();
     const firstOptionElement = document.createElement('option');
     firstOptionElement.value = 'any';
-    firstOptionElement.innerText = `All ${categoryName}`;
+    firstOptionElement.innerText = `All ${category}`;
     optionHTML.appendChild(firstOptionElement);
 
     for (const [id, name] of Object.entries(categoryData)) {
@@ -217,10 +228,12 @@ function renderSearchOptions(categoryName, categoryData) {
         optionHTML.appendChild(element);
     }
 
-    document.querySelector(`[data-search-${categoryName}]`).appendChild(optionHTML);
+    document.querySelector(`[data-search-${category}]`).appendChild(optionHTML);
 }
 
-// Initialise theme function
+/**
+ * Initialises light or dark theme
+ */
 function initialiseTheme() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         elements.dataSettingsTheme.value = 'night';
@@ -231,7 +244,10 @@ function initialiseTheme() {
     }
 }
 
-// SetTheme
+/**
+ *
+ * @param {('night'|'day')} theme
+ */
 function setTheme(theme) {
     if (theme === 'night') {
         document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
@@ -242,7 +258,9 @@ function setTheme(theme) {
     }
 }
 
-// showMoreBtn
+/**
+ * Function updates the number of books remaining and disables the button if the user is on the last page.
+ */
 function showMoreBtn() {
     elements.dataListButton.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
@@ -254,17 +272,18 @@ function showMoreBtn() {
     `;
 }
 
-// toggleSearchOverlay
-/*
-function toggleSearchOverlay(state) {
-    state === open ? (dataSearchOverlay.open = true) : (dataSearchOverlay.open = false);
-}
-*/
-
+/**
+ *
+ * @param {boolean} open
+ */
 function toggleSearchOverlay(open) {
     elements.dataSearchOverlay.open = open ? true : false;
 }
 
+/**
+ *
+ * @param {boolean} open
+ */
 function toggleSettingsOverlay(open) {
     elements.dataSettingsOverlay.open = open ? true : false;
 }
