@@ -3,9 +3,10 @@
 The "Book Connect" application renders a list of previews of books in a database. Each preview is a button styled to display the book cover image, title and author.
 
 User interactions available include:
--Changing the theme (day and night)
--Filtering the book previews by Title, Author and Genre
--Clicking on a book to view more details (description and year published)
+
+-   Changing the theme (day and night)
+-   Filtering the book previews by Title, Author and Genre
+-   Clicking on a book to view more details (description and year published)
 
 ![alt text](image.png)
 
