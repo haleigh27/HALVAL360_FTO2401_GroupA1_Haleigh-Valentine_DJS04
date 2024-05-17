@@ -1,39 +1,56 @@
-# DJS03 Project Brief: Book Connect - Abstractions
+# DJS03 Project: Book Connect - Abstractions
 
-Dive into the delightful world of "Book Connect," where literary adventures await at your fingertips! Browse, explore, and uncover your next great read from a vast, vibrant collection. Whether you're a fan of thrilling mysteries, epic fantasies, or heartwarming romances, "Book Connect" brings the magic of books directly to you. Happy reading! 
+The "Book Connect" application renders a list of previews of books in a database. Each preview is a button styled to display the book cover image, title and author.
 
-The "Book Connect" project provides an opportunity for students to refine a fully functional version of an application. The focus of this project is to enhance the code's maintainability, extendibility, and readability by applying concepts of objects and functions for abstraction. This will not only streamline future modifications but also consolidate students' understanding of higher-level programming concepts, including documentation, Styleguides, and abstraction principles.
+User interactions available include:
+-Changing the theme (day and night)
+-Filtering the book previews by Title, Author and Genre
+-Clicking on a book to view more details (description and year published)
 
 ![alt text](image.png)
 
-#### Goals
+## Discussion and Reflection Report
 
-- **Refactor Existing Code**: Analyse and refactor the given JavaScript and HTML code to improve its structure using objects and functions.
-- **Implement Abstraction**: Use abstraction to hide the complex reality while exposing only the necessary parts. This involves creating more generic functions that can perform tasks in a more flexible way.
-- **Documentation**: Write clear comments and documentation for the new code structure to explain the purpose and functionality of code blocks, functions, and objects.
-- **Follow Styleguides**: Adhere to established coding conventions and Styleguides to ensure code readability and maintainability.
+### Changes and rational
 
-#### Tasks
+##### Rendering list of preview buttons
 
-1. **Code Analysis**: Start by understanding the current implementation of the "Book Connect" application, including its HTML structure and JavaScript functionality.
-2. **Plan Refactoring**: Identify sections of the code that can be made more abstract and modular. Look for patterns and repetitive code that can be simplified.
-3. **Implement Abstraction**:
-   - **Objects**: Define objects to represent key elements of the application, such as books, authors, and genres. Utilise the provided data (e.g., `authors`, `genres`, `books`) to populate these objects.
-   - **Functions**: Create functions that handle repetitive tasks, such as rendering the book list, handling user interactions, and applying filters.
-4. **Enhance Functionality**: Ensure that the application remains fully functional after refactoring. Test all features to confirm that users can still search, filter, and view books as intended.
-5. **Documentation and Comments**: Throughout the refactoring process, document your code. Provide comments that explain the purpose and functionality of objects and functions.
-6. **Adherence to Styleguides**: Ensure your code follows JavaScript and HTML coding standards and best practices for readability and maintainability.
+-   Refactored creating a function with parameters for the array of books and the current page.
+-   This function can now be reused and called when needed.
 
-#### Discussion and Reflection
+##### Rendering author and genre filter options
 
-After completing the tasks, prepare a brief presentation for your coaching group on the following:
-- The rationale behind the refactoring decisions made, including the choice of objects and functions.
-- How abstraction has made the code more maintainable and extendable.
-- Any challenges faced during the refactoring process and how they were overcome.
-- Reflections on how this exercise has deepened your understanding of JavaScript programming concepts.
+-   The code for rendering the author and genre was repetititive so I refactored it by creating one function that can be called by passing in two arguments. Argument one is the filter category name as a string and argument 2 is the data object containing the options as key value pairs.
+-   This single function can now be reused to render the author and genre options in the search modal.
 
-#### Submission Guidelines
+##### Setting the theme
 
-Submit the refactored version of the "Book Connect" application, including all HTML, CSS, and JavaScript files. Ensure that your code is well-documented and adheres to the specified Styleguides. Include a written report covering the discussion and reflection points outlined above.
+-   Refactored the code to set the theme by creating a function with a theme parameter for day or night. This function was called in two instances to replace code was repetitive (in the initialise theme functions and the event listener for the theme modal).
 
-Make sure to submit your project to the LMS on the DJS03 Project Tab.
+##### Show more button
+
+-   Refactored the code to render the button to show more books by creating a function which can be reused. This function was eventually called three times in the code.
+
+##### Search and Settings overlay
+
+-   Created a toggle function for the seach and settings overlay which takes in a boolean as an argument. This is more readable and prevents errors related to selecting the correct element. Both were used multiple times.
+
+##### Event listeners
+
+-   Grouped all event listeners into a function.
+
+##### Element selectors
+
+-   Grouped all the selectors in an elements object.
+
+##### JSDOC
+
+-   Added js documentation for the functions and comments for the rest of the code.
+
+### Challenges
+
+-   The challenges I faced mainly related to identifying how much to refactor the code. I mainly refactored repetitive code.
+
+### Reflections
+
+-   This project was challenging as there was no strict guideline of what to do or what to refactor. It was a good learning experience.
